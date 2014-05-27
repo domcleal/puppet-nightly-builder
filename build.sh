@@ -2,13 +2,19 @@
 
 ssh -o "BatchMode yes" people.redhat.com "rm public_html/puppet-nightly/*" || true
 
-for d in puppet facter; do
-  if [ -e $d ]; then
-    (cd $d && git pull)
-  else
-    git clone https://github.com/puppetlabs/$d
-  fi
+if [ -e facter ]; then
+  (cd facter && git pull)
+else
+  git clone -b facter-2 https://github.com/puppetlabs/facter
+fi
 
+if [ -e puppet ]; then
+  (cd puppet && git pull)
+else
+  git clone https://github.com/puppetlabs/puppet
+fi
+
+for d in puppet facter; do
   pushd $d
   [ -e pkg/srpm ] && rm -rf pkg/srpm
   rake package:bootstrap
