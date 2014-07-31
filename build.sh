@@ -14,7 +14,7 @@ else
   git clone -b puppet-4 https://github.com/puppetlabs/puppet
 fi
 
-for d in puppet facter; do
+for d in facter puppet; do
   pushd $d
   [ -e pkg/srpm ] && rm -rf pkg/srpm
   rake package:bootstrap
