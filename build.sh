@@ -2,7 +2,7 @@
 
 ssh -o "BatchMode yes" people.redhat.com "rm public_html/puppet-nightly/*" || true
 
-for d in puppet facter; do
+for d in facter puppet; do
   if [ -e $d ]; then
     (cd $d && git pull)
   else
